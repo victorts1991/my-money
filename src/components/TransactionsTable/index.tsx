@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux'
+import { formatForMoney } from "../../utils/formatForMoney";
+import { RootState } from "../../store";
 import { Container } from "./styles";
 
 export function TransactionsTable () {
 
-    const [transactions, setTransactions] = useState([])
+    const transactions = useSelector((state: RootState) => state.transactions)
 
+    //console.log(transactions)
 
     return (
         <Container>
@@ -19,18 +23,18 @@ export function TransactionsTable () {
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>Desenvolvimento de app</td>
-                        <td className="deposit">R$12.000,00</td>
-                        <td>Desenvolvimento</td>
-                        <td>20/02/2022</td>
-                    </tr>
-                    <tr>
-                        <td>Desenvolvimento de app</td>
-                        <td className="withdraw">- R$12.000,00</td>
-                        <td>Desenvolvimento</td>
-                        <td>20/02/2022</td>
-                    </tr>
+                    {
+                        transactions.map((value, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{value.title}</td>
+                                    <td className={value.type}>{(value.type === 'withdraw' ? '- ' : '') + formatForMoney(value.value)}</td>
+                                    <td>{value.category}</td>
+                                    <td>{value.date}</td>
+                                </tr>
+                            )
+                        })
+                    }
                 </tbody>
             </table>
         </Container>

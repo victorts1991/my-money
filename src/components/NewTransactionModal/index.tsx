@@ -1,9 +1,12 @@
 import { FormEvent, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import Modal from 'react-modal'
 import { Container, TransactionTypeContainer, RadioBox } from './styles'
 import closeImg from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
+
+import { create } from '../../store/reducers/transactions'
 
 //For accessibility
 Modal.setAppElement('#root')
@@ -15,15 +18,19 @@ interface INewTransactionModal {
 
 export function NewTransactionModal({ isOpen, onRequestClose }: INewTransactionModal){
 
-    const [title, setTitle] = useState('')
-    const [value, setValue] = useState(0)
-    const [type, setType] = useState('deposit')
-    const [category, setCategory] = useState('')
+    const dispatch = useDispatch()
+
+    const [title, setTitle] = useState<string>('')
+    const [value, setValue] = useState<number>(0)
+    const [type, setType] = useState<string>('deposit')
+    const [category, setCategory] = useState<string>('')
 
     function handleCreateNewTransaction(event: FormEvent) {
         event.preventDefault()
 
-        const data = {title, value, type, category}
+        const data = {title, value, type, category, date: new Date().toLocaleDateString()}
+        dispatch(create(data))
+        onRequestClose()
     }
 
     return (

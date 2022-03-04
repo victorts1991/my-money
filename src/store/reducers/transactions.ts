@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IData {
-    title: '';
-    value: 0,
-    type: 'deposit',
-    category: ''
+    title: string;
+    value: number;
+    type: string;
+    category: string;
+    date: string;
 }
 
 export const transactionSlice = createSlice({
@@ -12,7 +13,7 @@ export const transactionSlice = createSlice({
   initialState: [] as IData[],
   reducers: {
     create: (state, action: PayloadAction<IData>) => {
-      state = [...state, action.payload]
+      state.push(action.payload)
     }
   },
 })
