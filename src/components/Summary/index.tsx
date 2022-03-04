@@ -48,12 +48,12 @@ export function Summary () {
                     <p>Saídas</p>
                     <img src={ outcomeImg } alt="Saídas" />
                 </header>
-                <strong>- { formatForMoney(totalOutcome) }</strong>
+                <strong>{ (totalOutcome > 0 ? '- ' : '') + formatForMoney(totalOutcome) }</strong>
             </div>
             <div>
                 <header>
                     <p>Total</p>
-                    <img src={ totalImg } alt="Entradas" />
+                    <img src={ totalImg } alt="Total" />
                 </header>
                 <strong>{(total < 0 ? '- ' : '') + formatForMoney(total) }</strong>
             </div>

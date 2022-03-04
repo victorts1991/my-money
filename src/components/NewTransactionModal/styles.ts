@@ -95,3 +95,7 @@ export const RadioBox = styled.button<IRadioBox>`
         color: var(--text-title);
     }
 `
+
+export const ErrorMessage = styled.span`
+    color: var(--red);
+`

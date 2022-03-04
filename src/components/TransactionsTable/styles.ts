@@ -36,3 +36,12 @@ export const Container = styled.div`
         }
     }
 `
+
+export const EmptyMessage = styled.span`
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-top: 5rem;
+    color: var(--text-title);
+`

@@ -1,7 +1,8 @@
 import { FormEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Modal from 'react-modal'
-import { Container, TransactionTypeContainer, RadioBox } from './styles'
+
+import { Container, TransactionTypeContainer, RadioBox, ErrorMessage } from './styles'
 import closeImg from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
@@ -24,21 +25,58 @@ export function NewTransactionModal({ isOpen, onRequestClose }: INewTransactionM
     const [value, setValue] = useState<number>(0)
     const [type, setType] = useState<string>('deposit')
     const [category, setCategory] = useState<string>('')
+    const [errorFields, setErrorFields] = useState<string[]>([])
 
     function handleCreateNewTransaction(event: FormEvent) {
         event.preventDefault()
 
-        const data = {title, value, type, category, date: new Date().toLocaleDateString()}
-        dispatch(create(data))
-        onRequestClose()
+        if(validateForm()){
+            const data = {title, value, type, category, date: new Date().toLocaleDateString()}
+            dispatch(create(data))
+            
+            clearFields()
+            onRequestClose()
+        }
+    }
+
+    function validateForm() {
+        let errors = []
+        if(title.length === 0){
+            errors.push('title')
+        }
+
+        if(value === 0){
+            errors.push('value')
+        }
+        
+        if(category.length === 0){
+            errors.push('category')
+        }
+
+        if(errors.length > 0){
+            setErrorFields(errors)
+            return false
+        }
+
+        return true
+    }
+
+    function clearFields() {
+        setTitle('')
+        setValue(0)
+        setType('deposit')
+        setCategory('')
     }
 
     return (
         <Modal
-          isOpen={isOpen}
-          onRequestClose={onRequestClose}
-          overlayClassName='react-modal-overlay'
-          className='react-modal-content'
+            isOpen={isOpen}
+            onRequestClose={() => {
+                clearFields()
+                onRequestClose()
+            }}
+            overlayClassName='react-modal-overlay'
+            className='react-modal-content'
         >   
             <button 
                 type="button" 
@@ -52,15 +90,32 @@ export function NewTransactionModal({ isOpen, onRequestClose }: INewTransactionM
                 <input 
                     placeholder='Título'
                     value={title}
-                    onChange={event => setTitle(event.target.value)}
+                    onChange={event => {
+                        if(event.target.value.length > 0){
+                            setErrorFields(errorFields.filter(value => value !== 'title'))
+                        }
+                        setTitle(event.target.value)
+                    }}
                 />
+                {
+                    errorFields.filter(value => value === 'title').length > 0 &&
+                    <ErrorMessage>Campo obrigatório!</ErrorMessage>
+                }
                 <input 
                     type='number'
                     placeholder='Valor'
                     value={value}
-                    onChange={event => setValue(Number(event.target.value))}
+                    onChange={event => { 
+                        if(event.target.value.length > 0){
+                            setErrorFields(errorFields.filter(value => value !== 'value'))
+                        }
+                        setValue(Number(event.target.value))
+                    }}
                 />
-                
+                {
+                    errorFields.filter(value => value === 'value').length > 0 &&
+                    <ErrorMessage>Campo obrigatório!</ErrorMessage>
+                }
                 <TransactionTypeContainer>
                     <RadioBox
                         type="button"
@@ -85,9 +140,17 @@ export function NewTransactionModal({ isOpen, onRequestClose }: INewTransactionM
                 <input 
                     placeholder='Categoria'
                     value={category}
-                    onChange={event => setCategory(event.target.value)}
+                    onChange={event => {
+                        if(event.target.value.length > 0){
+                            setErrorFields(errorFields.filter(value => value !== 'category'))
+                        }
+                        setCategory(event.target.value)
+                    }}
                 />
-
+                {
+                    errorFields.filter(value => value === 'category').length > 0 &&
+                    <ErrorMessage>Campo obrigatório!</ErrorMessage>
+                }
                 <button type='submit'>Cadastrar</button>
             </Container>
         </Modal>
