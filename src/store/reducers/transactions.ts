@@ -10,14 +10,17 @@ interface IData {
 
 export const transactionSlice = createSlice({
   name: 'transaction',
-  initialState: [] as IData[],
+  initialState: {data: [] as IData[]},
   reducers: {
     create: (state, action: PayloadAction<IData>) => {
-      state.push(action.payload)
-    }
+      state.data.push(action.payload)
+    },
+    remove: (state, action: PayloadAction<number>) => {
+      state.data = state.data.filter((value, index) => index !== action.payload)
+    },
   },
 })
 
-export const { create } = transactionSlice.actions
+export const { create, remove } = transactionSlice.actions
 
 export default transactionSlice.reducer

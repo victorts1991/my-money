@@ -11,7 +11,7 @@ import totalImg from "../../assets/total.svg"
 
 export function Summary () {
 
-    const transactions = useSelector((state: RootState) => state.transactions)
+    const transactions = useSelector((state: RootState) => state.transactions.data)
 
     const [totalIncome, setTotalIncome] = useState<number>(0)
     const [totalOutcome, setTotalOutcome] = useState<number>(0)
@@ -21,11 +21,11 @@ export function Summary () {
         let totalIncomeAux = 0
         let totalOutcomeAux = 0
         for(let i in transactions) {
-            if(transactions[i].type === 'deposit'){
-                totalIncomeAux += transactions[i].value   
+            if(transactions[parseInt(i)].type === 'deposit'){
+                totalIncomeAux += transactions[parseInt(i)].value   
             }
-            if(transactions[i].type === 'withdraw'){
-                totalOutcomeAux += transactions[i].value   
+            if(transactions[parseInt(i)].type === 'withdraw'){
+                totalOutcomeAux += transactions[parseInt(i)].value   
             }
         }
         setTotalIncome(totalIncomeAux)
@@ -48,14 +48,14 @@ export function Summary () {
                     <p>Saídas</p>
                     <img src={ outcomeImg } alt="Saídas" />
                 </header>
-                <strong>{ (totalOutcome > 0 ? '- ' : '') + formatForMoney(totalOutcome) }</strong>
+                <strong>{ (totalOutcome > 0 ? '-' : '') + formatForMoney(totalOutcome) }</strong>
             </div>
             <div>
                 <header>
-                    <p>Total</p>
+                    <p>Totall</p>
                     <img src={ totalImg } alt="Total" />
                 </header>
-                <strong>{(total < 0 ? '- ' : '') + formatForMoney(total) }</strong>
+                <strong>{formatForMoney(total) }</strong>
             </div>
         </Container>
     )
