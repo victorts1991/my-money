@@ -1,32 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
+import store from './store';
+
 import { App } from './App';
 
-import { createServer } from 'miragejs'
-
-createServer({
-  routes() {
-    this.namespace = 'api'
-
-    this.get('/transactions', () => {
-      return [
-        {
-          id: 1,
-          title: 'Transcation 1',
-          amount: 400,
-          type: 'deposit',
-          category: 'Food',
-          createdAt: new Date()
-
-        }
-      ]
-    })
-  }
-})
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
