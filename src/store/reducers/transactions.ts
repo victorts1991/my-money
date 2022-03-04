@@ -1,16 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export const transactionSlice = createSlice({
-  name: 'transaction',
-  initialState: {
-    title: '',
+interface IData {
+    title: '';
     value: 0,
     type: 'deposit',
     category: ''
-  },
+}
+
+export const transactionSlice = createSlice({
+  name: 'transaction',
+  initialState: [] as IData[],
   reducers: {
-    create: (state) => {
-      state.value += 1
+    create: (state, action: PayloadAction<IData>) => {
+      state = [...state, action.payload]
     }
   },
 })
