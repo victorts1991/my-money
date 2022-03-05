@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { formatForMoney } from "../../utils/formatForMoney";
 import { RootState } from "../../store";
-import { Container, EmptyMessage } from "./styles";
+import { Container, SmallScreen, EmptyMessage } from "./styles";
 
 import { remove } from '../../store/reducers/transactions'
 
@@ -23,9 +23,10 @@ export function TransactionsTable () {
     }
 
     console.log('transactions->', transactions)
-
+    
     return (
         <Container>
+            
             <table>
                 <thead>
                     <tr>
@@ -50,15 +51,40 @@ export function TransactionsTable () {
                                         <button
                                             onClick={() => deleteItem(index)}
                                         >
-                                            <img src={ trashImg } alt="Entradas" />
+                                            <img src={ trashImg } alt="Excluir" />
                                         </button>
                                     </td>
                                 </tr>
+                                
                             )
                         })
                     }
                 </tbody>
             </table>
+
+            <SmallScreen>
+                {
+                    transactions.map((value, index) => {
+                        return (
+                            <div key={index}>
+                                <header>
+                                    <span>{value.title}</span>
+                                    <button
+                                        onClick={() => deleteItem(index)}
+                                    >
+                                        <img src={ trashImg } alt="Excluir" />
+                                    </button>
+                                </header>
+                                <span className={value.type}>{(value.type === 'withdraw' ? '-' : '') + formatForMoney(value.value)}</span>
+                                <footer>
+                                    <span>{value.category}</span>
+                                    <span>{value.date}</span>
+                                </footer>
+                            </div>
+                        )
+                    })
+                }
+            </SmallScreen>
         </Container>
     )
 }

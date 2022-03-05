@@ -47,8 +47,10 @@ export const Container = styled.form`
             filter: brightness(0.9);
         }
     }
-`
 
+    
+    
+`
 export const TransactionTypeContainer = styled.div`
     margin: 1rem 0 0 0;
     display: flex;

@@ -35,5 +35,11 @@ export const Container = styled.div`
             font-weight: 500;
         }
     }
+
+    @media(max-width: 720px) {
+        overflow: auto;
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
     
-`
+` 

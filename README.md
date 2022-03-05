@@ -3,6 +3,4 @@ A simple personal finance control built with React and Redux. [Under constructio
 
 
 TODO: 
-
-- Improve Responsive
 - Unit tests
