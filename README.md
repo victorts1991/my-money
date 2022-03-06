@@ -1,5 +1,5 @@
 # my-money
-A simple personal finance control built with React and Redux.
+A simple personal finance control with reponsive design built with React, TypeScript and Redux.
 
 ![Demo Video](demo_video.gif)
 
