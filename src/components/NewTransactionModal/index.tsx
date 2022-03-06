@@ -9,8 +9,7 @@ import outcomeImg from '../../assets/outcome.svg'
 
 import { create } from '../../store/reducers/transactions'
 
-//For accessibility
-Modal.setAppElement('#root')
+if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root')
 
 interface INewTransactionModal {
     isOpen: boolean;
@@ -70,6 +69,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }: INewTransactionM
 
     return (
         <Modal
+            ariaHideApp={false}
             isOpen={isOpen}
             onRequestClose={() => {
                 clearFields()
@@ -80,6 +80,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }: INewTransactionM
         >   
             <button 
                 type="button" 
+                data-testid={"react-modal-close"}
                 className='react-modal-close'
                 onClick={onRequestClose}
             >
@@ -118,6 +119,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }: INewTransactionM
                 }
                 <TransactionTypeContainer>
                     <RadioBox
+                        data-testid="deposit-button"
                         type="button"
                         isActive={type === 'deposit'}
                         activeColor={'green'}
@@ -127,6 +129,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }: INewTransactionM
                         <span>Entrada</span>
                     </RadioBox>
                     <RadioBox
+                        data-testid="withdraw-button"
                         type="button"
                         isActive={type === 'withdraw'}
                         activeColor={'red'}

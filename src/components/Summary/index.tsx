@@ -41,21 +41,21 @@ export function Summary () {
                     <p>Entradas</p>
                     <img src={ incomeImg } alt="Entradas" />
                 </header>
-                <strong>{ formatForMoney(totalIncome) }</strong>
+                <strong data-testid="deposit-total-card">{ formatForMoney(totalIncome) }</strong>
             </div>
             <div>
                 <header>
                     <p>Saídas</p>
                     <img src={ outcomeImg } alt="Saídas" />
                 </header>
-                <strong>{ (totalOutcome > 0 ? '-' : '') + formatForMoney(totalOutcome) }</strong>
+                <strong data-testid="withdraw-total-card">{ (totalOutcome > 0 ? '-' : '') + formatForMoney(totalOutcome) }</strong>
             </div>
             <div>
                 <header>
                     <p>Totall</p>
                     <img src={ totalImg } alt="Total" />
                 </header>
-                <strong>{formatForMoney(total) }</strong>
+                <strong data-testid="total-card">{formatForMoney(total) }</strong>
             </div>
         </Container>
     )

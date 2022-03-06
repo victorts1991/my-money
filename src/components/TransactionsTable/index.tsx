@@ -1,5 +1,4 @@
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { formatForMoney } from "../../utils/formatForMoney";
 import { RootState } from "../../store";
 import { Container, SmallScreen, EmptyMessage } from "./styles";
@@ -21,12 +20,9 @@ export function TransactionsTable () {
     if(transactions.length === 0){
         return (<EmptyMessage>Nenhuma transação cadastrada.</EmptyMessage>)
     }
-
-    console.log('transactions->', transactions)
     
     return (
         <Container>
-            
             <table>
                 <thead>
                     <tr>
@@ -49,6 +45,7 @@ export function TransactionsTable () {
                                     <td>{value.date}</td>
                                     <td>
                                         <button
+                                            data-testid={"delete-button-" + index}
                                             onClick={() => deleteItem(index)}
                                         >
                                             <img src={ trashImg } alt="Excluir" />
@@ -70,6 +67,7 @@ export function TransactionsTable () {
                                 <header>
                                     <span>{value.title}</span>
                                     <button
+                                        data-testid={"delete-button-" + index}
                                         onClick={() => deleteItem(index)}
                                     >
                                         <img src={ trashImg } alt="Excluir" />
